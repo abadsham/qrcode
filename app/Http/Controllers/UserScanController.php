@@ -28,6 +28,18 @@ class UserScanController extends Controller
             'buyer_name' => 'required|string|max:255',
             'buyer_email' => 'required|email|max:255',
             'buyer_phone' => 'required|string|max:15',
+        ],[
+            'token.required' => 'Token tidak boleh kosong',
+            'token.string' => 'Token harus berupa string',
+            'buyer_name.required' => 'Nama pembeli tidak boleh kosong',
+            'buyer_name.string' => 'Nama pembeli harus berupa string',
+            'buyer_name.max' => 'Nama pembeli tidak boleh lebih dari 255 karakter',
+            'buyer_email.required' => 'Email pembeli tidak boleh kosong',
+            'buyer_email.email' => 'Format email pembeli tidak valid',
+            'buyer_email.max' => 'Email pembeli tidak boleh lebih dari 255 karakter',
+            'buyer_phone.required' => 'Nomor telepon pembeli tidak boleh kosong',
+            'buyer_phone.string' => 'Nomor telepon pembeli harus berupa string',
+            'buyer_phone.max' => 'Nomor telepon pembeli tidak boleh lebih dari 15 karakter',
         ]);
 
         $book = Book::where('uuid', $uuid)->firstOrFail();

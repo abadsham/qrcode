@@ -19,7 +19,11 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string',
+        ], [
+            'title.required' => 'Judul buku tidak boleh kosong',
+            'title.string' => 'Judul buku harus berupa string',
+            'title.max' => 'Judul buku tidak boleh lebih dari 255 karakter',
         ]);
 
         $validatedData['uuid'] = Str::uuid();
@@ -43,7 +47,10 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string',
+        ], [
+            'title.required' => 'Judul buku tidak boleh kosong',
+            'title.string' => 'Judul buku harus berupa string',
         ]);
 
         $book->update($validatedData);
@@ -59,7 +66,8 @@ class BookController extends Controller
         $book->delete();
 
         return response()->json([
-            'message' => 'Book deleted successfully',
+            'message' => 'Berhasil menghapus buku',
+            'book' => $book,
         ]);
     }
     
@@ -74,7 +82,13 @@ class BookController extends Controller
     public function generateToken(Request $request, Book $book)
     {
         $request->validate([
-            'count' => 'required|integer|min:1|max:1000'
+            'count' => 'required|integer|min:1|max:100'
+        ],
+        [
+            'count.required' => 'Jumlah token tidak boleh kosong',
+            'count.integer' => 'Jumlah token harus berupa angka',
+            'count.min' => 'Jumlah token minimal 1',
+            'count.max' => 'Jumlah token maksimal 100',
         ]);
 
         $tokens = [];
